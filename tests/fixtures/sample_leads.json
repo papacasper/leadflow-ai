@@ -1,0 +1,22 @@
+[
+  {"name": "Sarah Chen", "email": "sarah@blueridgedesign.com", "phone": "(555) 123-4567", "company": "Blue Ridge Design Co", "notes": "Needs new website, SEO audit"},
+  {"name": "sarah chen", "email": "sarah@blueridgedesign.com", "phone": "5551234567", "company": "Blue Ridge Mktg", "notes": "Referred by Jake"},
+  {"name": "  marcus JOHNSON  ", "email": "MARCUS.J@FRESHBYTE.IO", "phone": "+1-555-987-6543", "company": "FreshByte Technologies", "notes": "SaaS startup, Series A"},
+  {"name": "Marcus Johnson", "email": "m.johnson@freshbyte.io", "phone": "+15559876543", "company": "Freshbyte Tech", "notes": "met at SaaStr conference"},
+  {"name": "Aisha Patel", "email": "aisha.p@greenleaf.org", "phone": "", "company": "GreenLeaf Foundation", "notes": "Non-profit, needs donation page"},
+  {"name": "robert  o'brien", "email": "ROB@OBRIEN-LAW.COM  ", "phone": "555.222.3333", "company": "O'Brien & Associates Law", "notes": "law firm, wants new website"},
+  {"name": "Li Wei", "email": "liwei88@gmail.com", "phone": "", "company": "", "notes": "ecommerce store, Shopify migration"},
+  {"name": "Dr. Emily Nakamura", "email": "enakamura@valleyhealth.com", "phone": "(555) 444-5555", "company": "Valley Health Partners", "notes": "Medical practice, HIPAA"},
+  {"name": "JAMES WRIGHT", "email": "jwright@paystream.co", "phone": "555-333-4444", "company": "PayStream Financial", "notes": "fintech startup, mobile app"},
+  {"name": "priya sharma  ", "email": "  PRIYA@LEARNHUB.EDU", "phone": "+1 (555) 666-7777", "company": "LearnHub Academy", "notes": "online education, LMS integration"},
+  {"name": "Tom Baker", "email": "tom@bakerdigital.agency", "phone": "5558889999", "company": "Baker Digital Agency", "notes": "white-label partnership"},
+  {"name": "Yuki Tanaka", "email": "yuki@neuralpath.ai", "phone": "(555) 111-0000", "company": "NeuralPath AI", "notes": "AI startup, API docs site"},
+  {"name": "SARAH CHEN", "email": "s.chen@blueridgedesign.com", "phone": "555-123-4567", "company": "Blue Ridge Design", "notes": "follow up on SEO proposal"},
+  {"name": "james  wright", "email": "JWRIGHT@PAYSTREAM.CO", "phone": "(555) 333-4444", "company": "paystream financial", "notes": "needs investor deck"},
+  {"name": "  Aisha   Patel", "email": "AISHA.P@greenleaf.org", "phone": "", "company": "greenleaf foundation", "notes": "email campaign setup"},
+  {"name": "tom baker", "email": "TOM@BAKERDIGITAL.AGENCY", "phone": "555-888-9999", "company": "Baker Digital", "notes": "overflow development work"},
+  {"name": "Dr Emily Nakamura", "email": "enakamura@valleyhealth.com", "phone": "5554445555", "company": "Valley Health", "notes": "patient portal integration"},
+  {"name": "Carlos Mendez", "email": "carlos@brightpath.co", "phone": "(555) 777-8888", "company": "BrightPath Consulting", "notes": "management consulting, needs CRM integration"},
+  {"name": "nina  WILLIAMS", "email": "nina.w@designstudio.com", "phone": "+1-555-999-0001", "company": "NW Design Studio", "notes": "freelance designer, portfolio website"},
+  {"name": "Raj Krishnan", "email": "raj@scalemind.io", "phone": "5552223344", "company": "ScaleMind", "notes": "AI consulting firm, needs product website and blog"}
+]

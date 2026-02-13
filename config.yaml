@@ -1,0 +1,45 @@
+# LeadFlow AI Configuration
+
+mock_mode: false  # override with --mock flag or auto-detected if ANTHROPIC_API_KEY is missing
+
+sources:
+  google_sheets:
+    spreadsheet_name: "LeadFlow Raw Leads"
+    worksheet_index: 0
+
+processing:
+  dedup:
+    fuzzy_threshold: 0.7
+    claude_model: "claude-haiku-4-5-20251001"
+    max_tokens: 10
+  enrichment:
+    claude_model: "claude-sonnet-4-5-20250929"
+    batch_size: 5
+    max_tokens: 1024
+    valid_tags:
+      - saas
+      - ecommerce
+      - agency
+      - startup
+      - enterprise
+      - local-business
+      - marketing
+      - seo
+      - web-design
+      - mobile
+      - ai-ml
+      - healthcare
+      - fintech
+      - education
+
+destinations:
+  master_sheet:
+    spreadsheet_name: "LeadFlow Master"
+    worksheet_index: 0
+  slack:
+    webhook_env_var: "SLACK_WEBHOOK_URL"
+    channel: "#leads"
+
+logging:
+  level: INFO
+  format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"

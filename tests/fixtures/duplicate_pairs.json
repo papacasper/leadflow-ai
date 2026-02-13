@@ -1,0 +1,32 @@
+[
+  {
+    "description": "Exact email+phone match (Sarah Chen)",
+    "lead_a": {"name": "Sarah Chen", "email": "sarah@blueridgedesign.com", "phone": "5551234567", "company": "Blue Ridge Design Co"},
+    "lead_b": {"name": "sarah chen", "email": "sarah@blueridgedesign.com", "phone": "5551234567", "company": "Blue Ridge Mktg"},
+    "expected": "duplicate"
+  },
+  {
+    "description": "Same phone, different email format (Marcus Johnson)",
+    "lead_a": {"name": "Marcus Johnson", "email": "marcus.j@freshbyte.io", "phone": "+15559876543", "company": "FreshByte Technologies"},
+    "lead_b": {"name": "Marcus Johnson", "email": "m.johnson@freshbyte.io", "phone": "+15559876543", "company": "Freshbyte Tech"},
+    "expected": "duplicate"
+  },
+  {
+    "description": "Same email, phone formatting difference (James Wright)",
+    "lead_a": {"name": "James Wright", "email": "jwright@paystream.co", "phone": "5553334444", "company": "PayStream Financial"},
+    "lead_b": {"name": "james wright", "email": "jwright@paystream.co", "phone": "5553334444", "company": "paystream financial"},
+    "expected": "duplicate"
+  },
+  {
+    "description": "Same email domain + name match (Tom Baker)",
+    "lead_a": {"name": "Tom Baker", "email": "tom@bakerdigital.agency", "phone": "5558889999", "company": "Baker Digital Agency"},
+    "lead_b": {"name": "tom baker", "email": "tom@bakerdigital.agency", "phone": "5558889999", "company": "Baker Digital"},
+    "expected": "duplicate"
+  },
+  {
+    "description": "Different people, same company domain",
+    "lead_a": {"name": "Sarah Chen", "email": "sarah@blueridgedesign.com", "phone": "5551234567", "company": "Blue Ridge Design"},
+    "lead_b": {"name": "Mike Torres", "email": "mike@blueridgedesign.com", "phone": "5559998877", "company": "Blue Ridge Design"},
+    "expected": "different"
+  }
+]
