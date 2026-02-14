@@ -1,12 +1,11 @@
 """Integration tests for the full pipeline (all mock mode)."""
 
 import json
-import shutil
 from pathlib import Path
 
 import pytest
 
-from leadflow.destinations.master_sheet import MasterSheetWriter
+from leadflow.destinations.mock_writer import MockWriter
 from leadflow.destinations.slack_notifier import SlackNotifier
 from leadflow.models import Lead
 from leadflow.pipeline import Pipeline
@@ -23,7 +22,7 @@ def mock_pipeline(mock_config, tmp_path, monkeypatch):
         source=MockSource(),
         deduplicator=Deduplicator(mock_config),
         enricher=Enricher(mock_config),
-        writer=MasterSheetWriter(mock_config),
+        writer=MockWriter(mock_config),
         notifier=SlackNotifier(mock_config),
         config=mock_config,
     )
@@ -59,7 +58,7 @@ class TestFullPipeline:
             source=EmptySource(),
             deduplicator=Deduplicator(mock_config),
             enricher=Enricher(mock_config),
-            writer=MasterSheetWriter(mock_config),
+            writer=MockWriter(mock_config),
             notifier=SlackNotifier(mock_config),
             config=mock_config,
         )
@@ -75,7 +74,7 @@ class TestFullPipeline:
             source=MockSource(),
             deduplicator=Deduplicator(mock_config),
             enricher=Enricher(mock_config),
-            writer=MasterSheetWriter(mock_config),
+            writer=MockWriter(mock_config),
             notifier=SlackNotifier(mock_config),
             config=mock_config,
         )
@@ -96,7 +95,6 @@ class TestFullPipeline:
             Lead(name="Marcus Johnson", email="marcus.j@freshbyte.io", phone="+15559876543"),
         ]
 
-        # Use a source that returns leads matching existing
         class DuplicateSource:
             name = "dup_source"
             def fetch(self):
@@ -109,7 +107,7 @@ class TestFullPipeline:
             source=DuplicateSource(),
             deduplicator=Deduplicator(mock_config),
             enricher=Enricher(mock_config),
-            writer=MasterSheetWriter(mock_config),
+            writer=MockWriter(mock_config),
             notifier=SlackNotifier(mock_config),
             config=mock_config,
         )

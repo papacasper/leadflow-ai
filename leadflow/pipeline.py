@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import logging
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-from leadflow.destinations.master_sheet import MasterSheetWriter
+from leadflow.destinations.base import LeadDestination
 from leadflow.destinations.slack_notifier import SlackNotifier
 from leadflow.models import Lead
 from leadflow.processing.deduplicator import Deduplicator
@@ -47,7 +47,7 @@ class Pipeline:
         source: LeadSource,
         deduplicator: Deduplicator,
         enricher: Enricher,
-        writer: MasterSheetWriter,
+        writer: LeadDestination,
         notifier: SlackNotifier,
         config: dict,
     ) -> None:
@@ -103,7 +103,7 @@ class Pipeline:
         if self._dry_run:
             logger.info("Step 5/6: SKIPPED (dry run)")
         else:
-            logger.info("Step 5/6: Writing to master sheet")
+            logger.info("Step 5/6: Writing to %s", self._writer.name)
             stats.written = self._writer.write(enriched)
             logger.info("Wrote %d leads", stats.written)
 

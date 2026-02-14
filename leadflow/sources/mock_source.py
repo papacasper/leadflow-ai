@@ -3,11 +3,16 @@
 from __future__ import annotations
 
 from leadflow.models import Lead
+from leadflow.registry import register_source
 from leadflow.sources.base import LeadSource
 
 
+@register_source("mock")
 class MockSource(LeadSource):
     """Provides 12 realistic messy leads for demo/testing without external deps."""
+
+    def __init__(self, config: dict | None = None) -> None:
+        self._config = config or {}
 
     @property
     def name(self) -> str:

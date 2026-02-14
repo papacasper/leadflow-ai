@@ -2,10 +2,19 @@
 
 mock_mode: false  # override with --mock flag or auto-detected if ANTHROPIC_API_KEY is missing
 
+# Backend selection — choose which source and destination to use
+# Available: mock, google_sheets, notion
+# These can also be overridden via CLI: --source notion --dest notion
+source_backend: "google_sheets"
+destination_backend: "google_sheets"
+
 sources:
   google_sheets:
     spreadsheet_name: "LeadFlow Raw Leads"
     worksheet_index: 0
+  notion:
+    token_env_var: "NOTION_TOKEN"
+    database_id_env_var: "NOTION_SOURCE_DATABASE_ID"
 
 processing:
   dedup:
@@ -33,9 +42,13 @@ processing:
       - education
 
 destinations:
-  master_sheet:
+  google_sheets:
     spreadsheet_name: "LeadFlow Master"
     worksheet_index: 0
+  notion:
+    token_env_var: "NOTION_TOKEN"
+    database_id_env_var: "NOTION_DEST_DATABASE_ID"
+    rate_limit_delay: 0.35
   slack:
     webhook_env_var: "SLACK_WEBHOOK_URL"
     channel: "#leads"

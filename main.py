@@ -9,24 +9,31 @@ from rich.console import Console
 from rich.table import Table
 
 from leadflow.config import load_config
-from leadflow.destinations.master_sheet import MasterSheetWriter
 from leadflow.destinations.slack_notifier import SlackNotifier
 from leadflow.pipeline import Pipeline
 from leadflow.processing.deduplicator import Deduplicator
 from leadflow.processing.enricher import Enricher
+from leadflow.registry import get_source, get_destination, available_sources, available_destinations
+
+# Import backend modules to trigger registration decorators
+import leadflow.sources.mock_source  # noqa: F401
+import leadflow.sources.google_sheets  # noqa: F401
+import leadflow.sources.notion_source  # noqa: F401
+import leadflow.destinations.mock_writer  # noqa: F401
+import leadflow.destinations.master_sheet  # noqa: F401
+import leadflow.destinations.notion_writer  # noqa: F401
 
 
 def build_pipeline(config: dict) -> Pipeline:
     """Construct all pipeline components based on configuration."""
     mock_mode = config.get("mock_mode", True)
 
-    # Source selection
-    if mock_mode:
-        from leadflow.sources.mock_source import MockSource
-        source = MockSource()
-    else:
-        from leadflow.sources.google_sheets import GoogleSheetsSource
-        source = GoogleSheetsSource(config)
+    # Determine backends from config or CLI, defaulting based on mock_mode
+    source_key = config.get("source_backend", "mock" if mock_mode else "google_sheets")
+    dest_key = config.get("destination_backend", "mock" if mock_mode else "google_sheets")
+
+    source = get_source(source_key, config)
+    destination = get_destination(dest_key, config)
 
     # Claude client (only if not mock)
     claude_client = None
@@ -41,14 +48,13 @@ def build_pipeline(config: dict) -> Pipeline:
 
     deduplicator = Deduplicator(config, claude_client)
     enricher = Enricher(config, claude_client)
-    writer = MasterSheetWriter(config)
     notifier = SlackNotifier(config)
 
     return Pipeline(
         source=source,
         deduplicator=deduplicator,
         enricher=enricher,
-        writer=writer,
+        writer=destination,
         notifier=notifier,
         config=config,
     )
@@ -68,6 +74,8 @@ def print_summary(stats, config: dict) -> None:
     table.add_column("Metric", style="cyan")
     table.add_column("Value", style="bold")
 
+    table.add_row("Source", config.get("source_backend", "—"))
+    table.add_row("Destination", config.get("destination_backend", "—"))
     table.add_row("Leads fetched", str(stats.fetched))
     table.add_row("Normalized", str(stats.normalized))
     table.add_row("Unique", str(stats.unique))
@@ -101,6 +109,14 @@ def main() -> None:
         "--config", default="config.yaml",
         help="Path to config file (default: config.yaml)",
     )
+    parser.add_argument(
+        "--source", default=None,
+        help=f"Source backend (available: mock, google_sheets, notion)",
+    )
+    parser.add_argument(
+        "--dest", default=None,
+        help=f"Destination backend (available: mock, google_sheets, notion)",
+    )
     args = parser.parse_args()
 
     config = load_config(
@@ -109,6 +125,12 @@ def main() -> None:
         dry_run=args.dry_run,
         verbose=args.verbose,
     )
+
+    # CLI overrides for backends
+    if args.source:
+        config["source_backend"] = args.source
+    if args.dest:
+        config["destination_backend"] = args.dest
 
     pipeline = build_pipeline(config)
     stats = pipeline.run()

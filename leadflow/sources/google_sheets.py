@@ -5,11 +5,13 @@ from __future__ import annotations
 import logging
 
 from leadflow.models import Lead
+from leadflow.registry import register_source
 from leadflow.sources.base import LeadSource
 
 logger = logging.getLogger(__name__)
 
 
+@register_source("google_sheets")
 class GoogleSheetsSource(LeadSource):
     """Fetches leads from a Google Sheets spreadsheet."""
 
